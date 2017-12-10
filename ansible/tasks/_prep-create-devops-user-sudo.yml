@@ -12,14 +12,17 @@
       home: /home/devops
     tags:
       - prereq_as_root
+    register: create_user_result
 
   - name: Add ssh key to user's devops
     authorized_key:
       user: devops
       state: present
       key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
+    when: create_user_result.rc == 0
     tags:
       - prereq_as_root
+    register: add_pubkey_result
 
   - name: Allow members of wheel to run sudo without password
     lineinfile:
@@ -27,7 +30,9 @@
       state: present
       regexp: '^%wheel\s'
       line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+    when: add_pubkey_result == 0
     tags:
       - prereq_as_root
+    register: sudoers_result
 
 # vim:sw=2:ts=2:et:
