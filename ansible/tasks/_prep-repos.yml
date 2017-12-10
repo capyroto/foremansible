@@ -1,0 +1,26 @@
+---
+
+  - name: Install Puppet 5
+    yum: 
+      name: https://yum.puppetlabs.com/puppet5/puppet5-release-el-7.noarch.rpm
+      state: present
+    tags:
+      - enable_repository
+
+
+  - name: Install EPEL 7
+    yum: 
+      name: http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+      state: present
+    tags:
+      - enable_repository
+
+  - name: Install Foreman
+    yum: 
+      name: https://yum.theforeman.org/releases/1.16/el7/x86_64/foreman-release.rpm
+      state: present
+    tags:
+      - enable_repository
+
+
+# vim:sw=2:ts=2:et:
