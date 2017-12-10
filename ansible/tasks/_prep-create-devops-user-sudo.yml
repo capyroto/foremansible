@@ -2,7 +2,7 @@
 ## To be able to run this task, make sure to add your SSH pubkey as root user.
 ## Note that is expected a pre-existing ssh key pairs to be automatically copied to the server.
 # ssh-copy-id -i ~/.ssh/id_rsa.pub root@<SERVER>
-# ansible-playbook -u root --tags="prereq_as_root"
+# ansible-playbook -u root --tags="prereq_as_root" main.yaml
 
   - name: Create devops user to deploy Foreman
     user: 
