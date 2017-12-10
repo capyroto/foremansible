@@ -1,6 +1,14 @@
 ---
 # create devops and configure wheel via sudoers without password
-- import_tasks: ../tasks/create-devops-user-sudo.yml
+- import_tasks: ../tasks/_prep-create-devops-user-sudo.yml
 
+# make sure SELinux is enforcing
+- import_tasks: ../tasks/_prep-selinux-enforcing.yml
+
+# enable all repos used in the Foreman installation
+- import_tasks: ../tasks/_prep-repos.yml
+
+# update system to the latest version
+- import_tasks: ../tasks/_prep-update-system.yml
 
 # vim:sw=2:ts=2:et:

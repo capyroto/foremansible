@@ -1,0 +1,9 @@
+---
+  - name: Make sure SELinux is targeted enforcing
+    selinux:
+      policy: targeted
+      state: enforcing
+    tags:
+      - prereq_as_root
+
+# vim:sw=2:ts=2:et:
