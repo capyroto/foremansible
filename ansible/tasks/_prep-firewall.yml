@@ -1,0 +1,31 @@
+---
+
+- name: Clean existing firewall rules (ports)
+  firewalld:
+    port: "1-21/tcp,23-65535/tcp"
+    state: disabled
+    permanent: true
+    immediate: true
+  tags:
+    - firewall
+
+- name: Allow required ports
+  firewalld:
+    port: "{{ firewall.foreman.to_clients.ports + firewall.foreman.to_fproxy.ports }}"
+    state: enabled
+    permanent: true
+    immediate: true
+  tags:
+    - firewall
+
+- name: Allow required services
+  firewalld:
+    service: "{{ firewall.foreman.to_clients.services + firewall.foreman.to_fproxy.services }}"
+    state: enabled
+    permanent: true
+    immediate: true
+  tags:
+    - firewall
+
+    
+# vim:sw=2:ts=2:et:
