@@ -1,0 +1,6 @@
+---
+# create devops and configure wheel via sudoers without password
+- import_tasks: ../tasks/create-devops-user-sudo.yml
+
+
+# vim:sw=2:ts=2:et:

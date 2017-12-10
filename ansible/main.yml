@@ -1,0 +1,10 @@
+---
+# make sure to include the IP address of your server(s) on the inventory file
+- hosts: foreman_servers
+  tasks:
+
+    # Include all tasks to prepare the system
+    - import_tasks: meta_task/preparation.yml
+
+
+# vim:sw=2:ts=2:et:
