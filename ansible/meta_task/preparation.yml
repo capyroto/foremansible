@@ -2,5 +2,8 @@
 # create devops and configure wheel via sudoers without password
 - import_tasks: ../tasks/_prep-create-devops-user-sudo.yml
 
+# make sure SELinux is enforcing
+- import_tasks: ../tasks/_prep-selinux-enforcing.yml
+
 
 # vim:sw=2:ts=2:et:
