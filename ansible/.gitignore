@@ -1,5 +1,6 @@
 # Ansible stuff
 inventory
+main.retry
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
