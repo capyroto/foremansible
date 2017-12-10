@@ -1,0 +1,41 @@
+firewall:
+  foreman:
+    to_clients:
+      services:
+        - http
+        - https
+      ports:
+        - 5647/tcp
+        - 8000/tcp
+        - 8140/tcp
+        - 9090/tcp
+        - 5000/tcp
+    to_fproxy:
+      services:
+        - https
+      ports:
+        - 5646/tcp
+        - 5647/tcp
+        - 5000/tcp
+
+  fproxy:
+    to_clients:
+      services:
+        - http
+        - https
+        - dns
+        - dhcp
+        - tftp
+      ports:
+        - 5647/tcp
+        - 8000/tcp
+        - 8140/tcp
+        - 8443/tcp
+        - 9090/tcp
+        - 5000/tcp
+     to_foreman:
+       services:
+        - https
+        - http
+       ports:
+        - 9090/tcp
