@@ -1,0 +1,16 @@
+- firewalld:
+    immediate: yes
+    permanent: yes
+    port: "{{ item }}"
+    #port: "{{ foreman_to_fproxy_ports + foreman_to_client_ports }}"
+    state: enabled
+  with_items: "{{ foreman_to_fproxy_ports + foreman_to_client_ports }}"
+
+
+- firewalld:
+    immediate: yes
+    permanent: yes
+    service: "{{ item }}"
+    #service: "{{ foreman_to_fproxy_svcs + foreman_to_client_svcs }}"
+    state: enabled
+  with_items: "{{ foreman_to_fproxy_svcs + foreman_to_client_svcs }}"

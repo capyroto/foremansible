@@ -1,0 +1,34 @@
+- name: Disable all repos
+  command: "subscription-manager repos --disable='*'"
+  register: disable_repos
+
+- name: Enable required repos for foreman and fproxy
+  command: subscription-manager repos --enable=rhel-7-server-rpms
+           --enable=rhel-server-rhscl-7-rpms
+           --enable=rhel-7-server-foreman-tools-6.2-rpms
+  register: enable_required_repos
+  when: "disable_repos.rc == 0 and ( 'foreman' in group_names or 'fproxy' in group_names )"
+
+- name: Enable foreman-only repos
+  command: subscription-manager repos --enable=rhel-7-server-foreman-6.2-rpms
+  register: enable_foreman_repos
+  when: "enable_required_repos.rc == 0 and 'foreman' in group_names"
+
+- name: Enable fproxy-only repos
+  command: subscription-manager repos --enable=rhel-7-server-fproxy-6.2-rpms
+  register: enable_fproxy_repos
+  when: "enable_required_repos.rc == 0 and 'fproxy' in group_names"
+
+- name: Clean metadata
+  command: yum clean all
+  register: yum_clean_metadata
+  when: "(enable_foreman_repos.rc == 0 and 'foreman' in group_names) or (enable_fproxy_repos.rc == 0 and 'fproxy' in group_names) "
+
+- name: Collect repolist results
+  shell: yum repolist enabled
+  register: yum_repolist
+  when: "yum_clean_metadata.rc == 0"
+
+
+#- debug:
+#    var: disable_repos enable_all_foreman_repos yum_clean_metadata yum_repolist

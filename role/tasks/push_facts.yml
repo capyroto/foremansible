@@ -1,0 +1,21 @@
+- name: Push foreman 6.2 facts and answers file to the host
+  hosts: foreman-server
+  vars:
+    remote_dir: /etc/ansible/facts.d
+    facts_file: foreman_facts.fact
+    answers_file: foreman-answers-file.yaml
+    answers_dest: /root/foreman_answers.yml
+  tasks:
+    - name: Cria o diretorio de destino
+      file:
+        state: directory
+        recurse: yes
+        path: "{{ remote_dir }}"
+    - name: Instala lah o arquivo
+      copy:
+        src: "{{ facts_file }}"
+        dest: "{{ remote_dir }}"
+    - name: Instala o arquivo de respostas do foreman 6.2
+      template:
+        src: "{{ answers_file }}"
+        dest: "{{ answers_dest }}"
