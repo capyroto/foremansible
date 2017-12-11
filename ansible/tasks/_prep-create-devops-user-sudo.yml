@@ -2,13 +2,13 @@
 ## To be able to run this task, make sure to add your SSH pubkey as root user.
 ## Note that is expected a pre-existing ssh key pairs to be automatically copied to the server.
 # ssh-copy-id -i ~/.ssh/id_rsa.pub root@<SERVER>
-# ansible-playbook -u root --tags="prereq_as_root" main.yaml
-
+# ansible-playbook -u root --tags="prereq_as_root" main.yml
+#
   - name: Create devops user to deploy Foreman
     user: 
       name: devops
       shell: /bin/bash
-      groups: wheel
+      groups: "{{ superadmin_group }}"
       home: /home/devops
     tags:
       - prereq_as_root
@@ -25,8 +25,8 @@
     lineinfile:
       path: /etc/sudoers
       state: present
-      regexp: '^%wheel\s'
-      line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+      regexp: '^%{{ superadmin_group }}\s'
+      line: '%{{ superadmin_group }} ALL=(ALL) NOPASSWD: ALL'
     tags:
       - prereq_as_root
 

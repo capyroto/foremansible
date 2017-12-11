@@ -1,14 +1,18 @@
 ---
-# create devops and configure wheel via sudoers without password
-- import_tasks: ../tasks/_prep-create-devops-user-sudo.yml
+# include variables related to {{ ansible_os_family }}
+- include_vars: "../vars/{{ ansible_os_family }}.yml"
 
-# make sure SELinux is enforcing
-- import_tasks: ../tasks/_prep-selinux-enforcing.yml
+# install pre-req packages
+- include_tasks: ../tasks/_prep-required-packages.yml
+
+# create devops and configure wheel via sudoers without password
+- include_tasks: ../tasks/_prep-create-devops-user-sudo.yml
+
+# make sure SELinux is enforcing (RedHat only)
+- include_tasks: ../tasks/_prep-selinux-enforcing-RedHat.yml
+  when: ansible_os_family == 'RedHat'
 
 # enable all repos used in the Foreman installation
-- import_tasks: ../tasks/_prep-repos.yml
-
-# update system to the latest version
-- import_tasks: ../tasks/_prep-update-system.yml
+- include_tasks: "../tasks/_prep-repos-{{ ansible_os_family }}.yml"
 
 # vim:sw=2:ts=2:et:

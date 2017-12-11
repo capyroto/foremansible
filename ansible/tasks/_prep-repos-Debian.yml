@@ -1,0 +1,51 @@
+---
+  - name: Install ca-certificates
+    apt:
+      name: ca-certificates
+      state: latest
+    tags:
+      - prereq_enable_repository
+      - prereq_enable_repository_debian
+
+  - name: Enable Puppet 5 repository
+    apt:
+      deb: https://apt.puppetlabs.com/puppet5-release-stretch.deb
+    tags:
+      - prereq_enable_repository
+      - prereq_enable_repository_debian
+
+  - name: Import Foreman Repository GPG key
+    apt_key:
+      url: https://deb.theforeman.org/pubkey.gpg
+      state: present
+    tags:
+      - prereq_enable_repository
+      - prereq_enable_repository_debian
+
+  - name: Enable Foreman repository
+    apt_repository:
+      repo: "{{ item }}"
+      state: present
+    with_items:
+      - "deb http://deb.theforeman.org/ stretch 1.16"
+      - "deb http://deb.theforeman.org/ plugins 1.16"
+    tags:
+      - prereq_enable_repository
+      - prereq_enable_repository_debian
+
+  - name: Update apt-cache
+    apt:
+      update_cache: yes
+    tags:
+      - prereq_enable_repository
+      - prereq_enable_repository_debian
+
+  - name: Upgrade APT packages
+    apt:
+      name: "*"
+      state: latest
+    tags:
+      - prereq_enable_repository
+      - prereq_enable_repository_debian
+
+# vim:sw=2:ts=2:et:

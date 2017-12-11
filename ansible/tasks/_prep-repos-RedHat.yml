@@ -1,10 +1,8 @@
 ---
-
   - name: Enable Puppet 5 repository
     yum: 
       name: https://yum.puppetlabs.com/puppet5/puppet5-release-el-7.noarch.rpm
       state: present
-    when: ansible_distribution_file_variety == "RedHat" and ansible_distribution_major_version == "7"
     tags:
       - prereq_enable_repository
       - prereq_enable_repository_rhel_base
@@ -13,7 +11,6 @@
     yum: 
       name: http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
       state: present
-    when: ansible_distribution_file_variety == "RedHat" and ansible_distribution_major_version == "7"
     tags:
       - prereq_enable_repository
       - prereq_enable_repository_rhel_base
@@ -22,7 +19,14 @@
     yum: 
       name: https://yum.theforeman.org/releases/1.16/el7/x86_64/foreman-release.rpm
       state: present
-    when: ansible_distribution_file_variety == "RedHat" and ansible_distribution_major_version == "7"
+    tags:
+      - prereq_enable_repository
+      - prereq_enable_repository_rhel_base
+
+  - name: Update Red Hat system to the latest version
+    yum:
+      name: "*"
+      state: latest
     tags:
       - prereq_enable_repository
       - prereq_enable_repository_rhel_base

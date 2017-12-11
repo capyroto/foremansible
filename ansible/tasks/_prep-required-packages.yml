@@ -1,0 +1,9 @@
+---
+  - name: Install sudo
+    package:
+      name: sudo
+      state: present
+    tags:
+       - prereq_as_root
+
+# vim:sw=2:ts=2:et:

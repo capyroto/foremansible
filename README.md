@@ -19,8 +19,14 @@ $ vim inventory
 192.168.0.1
 ~~~
 
+Note: On Debian systems, by default the root user is not allowed to connect remotely.
+~~~
+$ echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
+$ /etc/init.d/ssh restart
+~~~
+
 Then execute the pre-requisites:
 ~~~
 $ ssh-copy-id -i ~/.ssh/id_rsa.pub root@<SERVER>
-$ ansible-playbook -u root --tags="prereq_as_root" main.yaml
+$ ansible-playbook -u root --tags="prereq_as_root" main.yml
 ~~~
