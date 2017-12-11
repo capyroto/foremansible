@@ -1,0 +1,25 @@
+---
+# These variables will be automatically loaded in runtime on all hosts under
+# the group named as this file (see the inventory file).
+# e.g. inventory says:
+#   [myservers]
+#      somehostname
+#      anotherhostname
+# Then this file here would be named "myservers.yml", so hosts "somehostname"
+# and "anotherhostname" would always load these variables automatically.
+
+firewall:
+  foreman:
+    services:
+      - dns
+      - dhcp
+      - tftp
+      - http
+      - https
+      - postgresql
+      - puppetmaster
+    ports:
+      - 3000/tcp
+      - 3306/tcp
+      - 5910-5930/tcp
+      - 8443/tcp

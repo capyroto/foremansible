@@ -21,5 +21,10 @@
     # Include all tasks to prepare the system
     - import_tasks: meta_task/preparation.yml
 
+  handlers:
+    - name: restart_svc_firewalld
+      service:
+        name: firewalld
+        state: restarted
 
 # vim:sw=2:ts=2:et:

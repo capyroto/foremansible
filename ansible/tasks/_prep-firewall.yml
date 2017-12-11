@@ -1,0 +1,58 @@
+---
+
+- name: Install firewalld package
+  package:
+    name: firewalld
+    state: latest
+  tags:
+    - firewall
+
+- name: Enable firewalld service
+  service:
+    name: firewalld
+    state: enabled
+  tags:
+    - firewall
+
+- name: Clean existing firewall rules (ports)
+  firewalld:
+    port: "{{ item }}"
+    state: disabled
+    permanent: true
+    immediate: false
+  with_items:
+    - "1-21/tcp"
+    - "23-65535/tcp"
+    - "1-21/udp"
+    - "23-65535/udp"
+  tags:
+    - firewall
+  notify: restart_svc_firewalld
+
+- name: Allow required ports
+  firewalld:
+    port: "{{ item }}"
+    state: enabled
+    permanent: true
+    immediate: false
+  with_items:
+    - "{{ firewall.foreman.ports }}"
+  tags:
+    - firewall
+  notify: restart_svc_firewalld
+
+- name: Allow required services
+  firewalld:
+    service: "{{ item }}"
+    state: enabled
+    permanent: true
+    immediate: false
+  with_items:
+    - "{{ firewall.foreman.services }}"
+  tags:
+    - firewall
+  notify: restart_svc_firewalld
+
+
+
+# vim:sw=2:ts=2:et:
