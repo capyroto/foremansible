@@ -1,0 +1,22 @@
+---
+  # Installing Foreman packages
+  - name: Installing Foreman Package
+    package:
+      name: foreman-installer
+      state: latest
+    tags:
+      - install_foreman_pkg
+
+  # Executing foreman-installer command
+  - name: Foreman Installation Process
+    command: foreman-installer
+    register: output_foreman_installer
+    tags:
+      - install_foreman_command
+
+  # Printing the result
+  - name: Result !!!
+    debug: 
+      msg: "{{ output_foreman_installer.stdout.split('\n') }}"
+
+# vim:sw=2:ts=2:et:

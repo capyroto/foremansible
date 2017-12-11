@@ -1,0 +1,6 @@
+---
+# Start the installation process
+- import_tasks: ../tasks/_inst-foreman-installer.yml
+
+
+# vim:sw=2:ts=2:et:

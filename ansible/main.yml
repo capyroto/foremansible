@@ -10,7 +10,7 @@
 # Then execute the pre-requisites:
 #
 # ssh-copy-id -i ~/.ssh/id_rsa.pub root@<SERVER>
-# ansible-playbook -u root --tags="prereq_as_root" main.yaml
+# ansible-playbook -u root --tags="prereq_as_root" main.yml
 #
 #---------------------------------------------------------------------------------------------------
 
@@ -20,6 +20,9 @@
 
     # Include all tasks to prepare the system
     - import_tasks: meta_task/preparation.yml
+
+    # Call installation process
+    - import_tasks: meta_task/installation.yml
 
   handlers:
     - name: restart_svc_firewalld
